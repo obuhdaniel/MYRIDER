@@ -1050,36 +1050,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── RIDER CTA ── */}
-      <section id="rider" style={{ padding: "120px 32px", background: "#0a0a0a", position: "relative", overflow: "hidden" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="grid-responsive">
-          <div className={vis("rider") ? "animate-slide-right" : "hidden-right"} style={{ animationDelay: "0.1s" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: "#C9A84C", marginBottom: 20 }}>JOIN AS A RIDER</div>
-            <h2 className="font-headline section-title" style={{ fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.04em", marginBottom: 24, lineHeight: 1.05 }}>
-              Ride on Your Terms.<br /><span className="gold-text">Earn More.</span>
-            </h2>
-            <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8, marginBottom: 40, fontSize: 16, fontWeight: 300 }}>
-              Set your own hours. Keep 85% of earnings. Get paid weekly. Join 40,000+ verified riders already on the platform.
-            </p>
-            <div style={{ display: "flex", gap: 24, marginBottom: 40 }}>
-              {[{ val: "85%", label: "You keep" }, { val: "Weekly", label: "Payouts" }, { val: "0", label: "Joining fee" }].map((s) => (
-                <div key={s.label}>
-                  <div className="font-headline gold-text" style={{ fontSize: 28, fontWeight: 800 }}>{s.val}</div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-            <button className="btn-gold" style={{ padding: "16px 40px", borderRadius: 100, fontSize: 16 }}>Apply to Ride →</button>
-          </div>
-
-          <div className={vis("rider") ? "animate-slide-left" : "hidden-left"} style={{ animationDelay: "0.3s", position: "relative" }}>
-            <div style={{ borderRadius: 28, overflow: "hidden", aspectRatio: "3/4" }}>
-              <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80" alt="Rider" className="rider-photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 60%)" }} />
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* ── FINAL CTA ── */}
       <section id="cta" style={{ padding: "140px 32px", position: "relative", overflow: "hidden" }}>
