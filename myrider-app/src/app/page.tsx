@@ -145,6 +145,7 @@ export default function Home() {
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const [count, setCount] = useState({ rating: 0, time: 0, success: 0, riders: 0 });
   const [darkMode, setDarkMode] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const statsVisible = useRef(false);
   const t = darkMode ? themes.dark : themes.light;
 
@@ -432,23 +433,33 @@ export default function Home() {
           .hero-title { font-size: clamp(2.5rem, 10vw, 4.5rem) !important; }
           .section-title { font-size: clamp(2rem, 7vw, 3.5rem) !important; }
         }
+        
+        @media (max-width: 900px) {
+          .nav-links { display: none !important; }
+          .nav-cta { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+        }
+        
+        @media (min-width: 901px) {
+          .mobile-menu-btn { display: none !important; }
+        }
       `}</style>
 
       {/* ── NAV ── */}
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         transition: "all 0.5s ease",
-        padding: scrolled ? "12px 0" : "24px 0",
+        padding: scrolled ? "12px 0" : "20px 0",
         background: scrolled ? t.navScrolled : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
         borderBottom: scrolled ? `1px solid ${t.border}` : "none",
       }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div className="font-headline" style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.03em" }}>
-            <span className="gold-text">My</span>
-            <span style={{ color: t.text }}>Rider</span>
-          </div>
-          <div style={{ display: "flex", gap: 36, alignItems: "center" }} className="hidden md:flex">
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <a href="#" style={{ display: "flex", alignItems: "center" }}>
+            <img src="/logo.png" alt="MyRider" style={{ height: 32 }} />
+          </a>
+          
+          <div style={{ display: "flex", gap: 24, alignItems: "center" }} className="nav-links">
             {navItems.map((item) => (
               <a key={item.label} href={item.href} style={{
                 fontFamily: "'Syne', sans-serif",
@@ -466,31 +477,86 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: "50%",
-              border: `1px solid ${t.border}`,
-              background: t.surface3,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 18,
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.borderColor = t.borderHover)}
-            onMouseLeave={e => (e.currentTarget.style.borderColor = t.border)}
-          >
-            {darkMode ? "☀️" : "🌙"}
-          </button>
-          <button className="btn-gold" style={{ padding: "10px 26px", borderRadius: 100, fontSize: 14 }}>
-            Send a Package →
-          </button>
+          
+          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                border: `1px solid ${t.border}`,
+                background: "transparent",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 16,
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = t.borderHover)}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = t.border)}
+            >
+              {darkMode ? "☀️" : "🌙"}
+            </button>
+            <button className="btn-gold nav-cta" style={{ padding: "8px 20px", borderRadius: 100, fontSize: 13 }}>
+              Send a Package
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="mobile-menu-toggle"
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 8,
+                border: "none",
+                background: t.surface3,
+                cursor: "pointer",
+                display: "none",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 20,
+              }}
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
+          </div>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div style={{
+          position: "fixed",
+          top: 60,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: t.surface,
+          zIndex: 99,
+          padding: "32px 24px",
+          overflowY: "auto",
+        }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {navItems.map((item) => (
+              <a key={item.label} href={item.href} onClick={() => setMobileMenuOpen(false)} style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 600,
+                fontSize: 18,
+                color: t.text,
+                textDecoration: "none",
+                padding: "16px 0",
+                borderBottom: `1px solid ${t.border}`,
+              }}>
+                {item.label}
+              </a>
+            ))}
+            <button className="btn-gold" style={{ padding: "16px 32px", borderRadius: 100, fontSize: 16, marginTop: 24, width: "100%" }}>
+              Send a Package →
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── HERO ── */}
       <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", padding: "120px 32px 80px" }}>
@@ -1046,9 +1112,9 @@ export default function Home() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 60, marginBottom: 60 }} className="footer-grid">
             <div>
-              <div className="font-headline" style={{ fontSize: 26, fontWeight: 800, marginBottom: 16 }}>
-                <span className="gold-text">My</span><span>Rider</span>
-              </div>
+              <a href="#" style={{ display: "inline-block", marginBottom: 16 }}>
+                <img src="/logo.png" alt="MyRider" style={{ height: 36 }} />
+              </a>
               <p style={{ color: t.textDim, fontSize: 14, lineHeight: 1.8, maxWidth: 260 }}>
                 Kinetic precision for the modern city. Fast, reliable, and intelligent last-mile logistics.
               </p>
@@ -1091,6 +1157,9 @@ export default function Home() {
       {/* Responsive CSS */}
       <style>{`
         @media (max-width: 900px) {
+          .nav-links { display: none !important; }
+          .nav-cta { display: none !important; }
+          .mobile-menu-toggle { display: flex !important; }
           .grid-responsive { grid-template-columns: 1fr !important; gap: 48px !important; }
           .steps-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
